@@ -1,10 +1,13 @@
 package com.service;
 
+import com.model.AnagramsList;
 import com.model.Checker;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+
+import static org.junit.Assert.*;
 
 public class AnagramServiceTest {
 
@@ -21,7 +24,7 @@ public class AnagramServiceTest {
         String secondString = "anagrams";
         final Checker checker = anagramService.checkIfStringsAreAnagrams(firstString, secondString);
 
-        assertFalse(checker.areAnagrams);
+        assertFalse(checker.isAreAnagrams());
     }
 
     @Test
@@ -30,7 +33,7 @@ public class AnagramServiceTest {
         String secondString = "anagrams";
         final Checker checker = anagramService.checkIfStringsAreAnagrams(firstString, secondString);
 
-        assertFalse(checker.areAnagrams);
+        assertFalse(checker.isAreAnagrams());
     }
 
     @Test
@@ -38,7 +41,18 @@ public class AnagramServiceTest {
         String firstString = "smargnaa";
         String secondString = "anagrams";
         final Checker checker = anagramService.checkIfStringsAreAnagrams(firstString, secondString);
-        assertTrue(checker.areAnagrams);
+        assertTrue(checker.isAreAnagrams());
     }
 
+    @Test
+    public void returnListOfAnagramsForAValidString() {
+        final ArrayList<String> list = new ArrayList<>();
+        list.add("ab"); list.add("ba");
+        final AnagramsList expectedAnagramsList = new AnagramsList(list);
+        String firstString = "ab";
+
+        final AnagramsList actualAnagrams = anagramService.getAllAnagrams(firstString);
+
+        assertEquals(expectedAnagramsList, actualAnagrams);
+    }
 }

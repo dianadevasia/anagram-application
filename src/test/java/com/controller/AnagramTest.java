@@ -1,6 +1,7 @@
 package com.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.model.AnagramsList;
 import com.model.Checker;
 import com.service.AnagramService;
 import org.junit.Test;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -37,6 +39,20 @@ public class AnagramTest {
 
         this.mockMvc.perform(MockMvcRequestBuilders
                 .get("/anagrams/abcd/dcba"))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(expectedResponse));
+    }
+
+    @Test
+    public void shouldReturnPayloadWithAllAnagramsWhenAStringStringIsPassed() throws Exception {
+        final AnagramsList anagramsList = new AnagramsList(List.of("ab","ba"));
+        final ObjectMapper objectMapper = new ObjectMapper();
+        final String expectedResponse = objectMapper.writeValueAsString(anagramsList);
+
+        when(service.getAllAnagrams("ab")).thenReturn(anagramsList);
+
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .get("/anagrams/ab"))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(expectedResponse));
     }

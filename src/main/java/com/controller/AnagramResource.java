@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.model.AnagramsList;
 import com.model.Checker;
 import com.service.AnagramService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +25,11 @@ public class AnagramResource {
                                                  @NotNull @PathVariable(value = "string2") String string2) {
         final Checker anagramChecker = anagramService.checkIfStringsAreAnagrams(string1, string2);
         return ResponseEntity.ok().body(anagramChecker);
+    }
+
+    @GetMapping("/anagrams/{string1}")
+    public ResponseEntity<AnagramsList> getAnagrams(@NotNull @PathVariable(value = "string1") String string) {
+        final AnagramsList anagramsList = anagramService.getAllAnagrams(string);
+        return ResponseEntity.ok().body(anagramsList);
     }
 }

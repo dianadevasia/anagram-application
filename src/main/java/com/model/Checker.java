@@ -1,10 +1,10 @@
 package com.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
+@AllArgsConstructor
 public class Checker {
-    public boolean areAnagrams;
-
-    public Checker(boolean areAnagrams) {
-        this.areAnagrams = areAnagrams;
-    }
+    private boolean areAnagrams;
 }
