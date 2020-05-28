@@ -1,0 +1,12 @@
+spring:
+  profiles:
+    active: development
+logging:
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+  level:
+    org.springframework: INFO
+# Server configuration
+server:
+  port: 8080
+  sessionTimeout: 30
